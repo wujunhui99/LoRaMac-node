@@ -73,7 +73,7 @@ Please follow instructions provided by [Development environment](doc/development
 Clone the repository from GitHub
 
 ```bash
-$ git clone https://github.com/lora-net/loramac-node.git loramac-node
+$ git clone https://github.com/wujunhui99/loramac-node.git loramac-node
 ```
 
 LoRaMac-node project contains Git submodules that must be initialized
