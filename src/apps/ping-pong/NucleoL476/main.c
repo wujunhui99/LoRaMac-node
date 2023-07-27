@@ -218,6 +218,7 @@ int main( void )
 #endif
 
     Radio.Rx( RX_TIMEOUT_VALUE );
+    printf("PingPong test Start!\r\n");
 
     while( 1 )
     {
@@ -232,6 +233,7 @@ int main( void )
                     {
                         // Indicates on a LED that the received frame is a PONG
                         GpioToggle( &Led1 );
+                        printf("Received: PONG\r\n");
 
                         // Send the next PING frame
                         Buffer[0] = 'P';
@@ -244,6 +246,7 @@ int main( void )
                             Buffer[i] = i - 4;
                         }
                         DelayMs( 1 );
+                        printf("Sent: PING\r\n");
                         Radio.Send( Buffer, BufferSize );
                     }
                     else if( strncmp( ( const char* )Buffer, ( const char* )PingMsg, 4 ) == 0 )
@@ -267,7 +270,8 @@ int main( void )
                     {
                         // Indicates on a LED that the received frame is a PING
                         GpioToggle( &Led1 );
-
+                        printf("Received: PING\r\n");
+	
                         // Send the reply to the PONG string
                         Buffer[0] = 'P';
                         Buffer[1] = 'O';
@@ -280,6 +284,7 @@ int main( void )
                         }
                         DelayMs( 1 );
                         Radio.Send( Buffer, BufferSize );
+                        printf("Sent: PONG\r\n");
                     }
                     else // valid reception but not a PING as expected
                     {    // Set device as master and start again
@@ -312,6 +317,7 @@ int main( void )
                 }
                 DelayMs( 1 );
                 Radio.Send( Buffer, BufferSize );
+                printf("Sent: PING\r\n");
             }
             else
             {
@@ -346,12 +352,14 @@ void OnTxDone( void )
 
 void OnRxDone( uint8_t *payload, uint16_t size, int16_t rssi, int8_t snr )
 {
+	
     Radio.Sleep( );
     BufferSize = size;
     memcpy( Buffer, payload, BufferSize );
     RssiValue = rssi;
     SnrValue = snr;
     State = RX;
+    
 }
 
 void OnTxTimeout( void )

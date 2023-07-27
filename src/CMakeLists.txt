@@ -24,7 +24,7 @@ cmake_minimum_required(VERSION 3.6)
 
 # Allow switching of target platform
 set(BOARD_LIST NAMote72 NucleoL073 NucleoL152 NucleoL476 SAMR34 SKiM880B SKiM980A SKiM881AXL B-L072Z-LRWAN1)
-set(BOARD NucleoL073 CACHE STRING "Default target platform is NucleoL073")
+set(BOARD NucleoL476 CACHE STRING "Default target platform is NucleoL476")
 set_property(CACHE BOARD PROPERTY STRINGS ${BOARD_LIST})
 
 # Allow switching of MBED shields
@@ -39,22 +39,22 @@ set_property(CACHE SECURE_ELEMENT PROPERTY STRINGS ${SECURE_ELEMENT_LIST})
 
 # Allow switching of Applications
 set(APPLICATION_LIST LoRaMac ping-pong rx-sensi tx-cw )
-set(APPLICATION LoRaMac CACHE STRING "Default Application is LoRaMac")
+set(APPLICATION ping-pong CACHE STRING "Default Application is ping-pong")
 set_property(CACHE APPLICATION PROPERTY STRINGS ${APPLICATION_LIST})
 
 # Switch for USB-Uart support, enable it for some Applications who needs it.
-option(USE_USB_CDC "Use USB-Uart" OFF)
+option(USE_USB_CDC "Use USB-Uart" ON)
 
 # Switch for debugger support.
 option(USE_DEBUGGER "Use Debugger" ON)
 
 # Switch for Class B support of LoRaMac.
-option(CLASSB_ENABLED "Class B support of LoRaMac" OFF)
+option(CLASSB_ENABLED "Class B support of LoRaMac" ON)
 
 #---------------------------------------------------------------------------------------
 # Target Boards
 #---------------------------------------------------------------------------------------
-
+include(/home/junhui/loramac-node/cmake/toolchain-arm-none-eabi.cmake)
 if(BOARD STREQUAL NAMote72)
     # Configure toolchain for NAMote72
     set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/boards/NAMote72/cmsis/arm-gcc/stm32l152xc_flash.ld)
